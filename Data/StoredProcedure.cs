@@ -3,6 +3,7 @@ using System.Collections;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using narilearsi.ModelDB;
 
@@ -33,7 +34,7 @@ namespace narilearsi.Data
         private string GetConnectionString(ConnectionDB ConnectionDB)
         {
             //Cadena ambiente DEV
-            string connectionString = _configuration["ConnectionStrings:rdsDataBase"];
+            string connectionString = _configuration["connectingString:rdsDataBase"];
 
             switch (ConnectionDB)
             {
@@ -109,6 +110,56 @@ namespace narilearsi.Data
             _mdts = dtsReturn;
             return dtsReturn;
         }
+
+        public Task<DataSet> executeAsync()
+        {
+            dtsReturn = new DataSet();
+            sqlComando = new SqlCommand();
+
+            sqlComando.CommandType = CommandType.StoredProcedure;
+            sqlComando.CommandText = strSpName;
+
+            // Se agregan los parametros al comando siempre y cuando existan parametros
+            if (hstParameters != null && hstParameters.Count > 0)
+            {
+                foreach (System.Collections.DictionaryEntry s in hstParameters)
+                    sqlComando.Parameters.Add(s.Value);
+            }
+
+            try
+            {
+                return Task.Run(() =>
+                {
+
+                    using (SqlConnection conn1 = new SqlConnection(strConnString))
+                    {
+                        sqlComando.Connection = conn1;
+                        sqlComando.CommandTimeout = 19000; // GeneralCompartido.gCommandTimeout;
+                        dAdpt = new SqlDataAdapter(sqlComando);
+                        dAdpt.Fill(dtsReturn);
+                        conn1.Close();
+                    }
+                    // Asignamos el dataset a la propiedad de la clase que lo contendra
+                    _mdts = dtsReturn;
+                    return dtsReturn;
+                });
+            }
+            catch (SqlException ex)
+            {
+                return Task.Run(() =>
+                {
+                    if (dtsReturn == null)
+                        dtsReturn = new DataSet();
+                    dtsReturn.Tables.Clear();
+                    dtsReturn.Tables.Add(this.MakeDataTableResult(ex.Message));
+                    // Asignamos el dataset a la propiedad de la clase que lo contendra
+                    _mdts = dtsReturn;
+                    return dtsReturn;
+                });
+            }
+        }
+
+
 
         //DISPOSED *******
         private bool disposedValue;      // To detect redundant calls

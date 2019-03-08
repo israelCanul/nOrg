@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using narilearsi.Services;
 
 namespace narilearsi.Controllers
 {
@@ -11,16 +12,20 @@ namespace narilearsi.Controllers
     public class ValuesController : ControllerBase
     {
         private readonly IConfiguration _configuration;
+        private readonly IPersonRepository _PersonRepository;
 
-        public ValuesController(IConfiguration configuration) {
+
+        public ValuesController(IConfiguration configuration, IPersonRepository personRepository) {
             _configuration = configuration;
+            _PersonRepository = personRepository;
         }
 
         // GET api/values
         [HttpGet("config")]
-        public IActionResult configGet()
+        public async Task<IActionResult> configGetAsync()
         {
-            return Ok("ses");
+            var res = await _PersonRepository.GetPersons();
+            return Ok(res);
         }
 
         // GET api/values/5

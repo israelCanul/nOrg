@@ -5,8 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.AspNetCore.Server.Kestrel.Core.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace narilearsi
 {
@@ -39,9 +42,19 @@ namespace narilearsi
                 if (args != null)
                 {
                     config.AddCommandLine(args);
-                }                
-            });
+                }
+            })
+            .ConfigureLogging((hostingContext, logging) =>
+            {
+                logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+                logging.AddConsole();
+                logging.AddDebug();
+            })
+            .UseIISIntegration()
+            .UseDefaultServiceProvider(
+                    (context, options) => { options.ValidateScopes = context.HostingEnvironment.IsDevelopment(); });
             
+
             return builder.UseStartup<Startup>()
                            .UseUrls("http://localhost:5020").Build();
         }
