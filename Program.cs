@@ -17,47 +17,62 @@ namespace narilearsi
     {
         public static void Main(string[] args)
         {
-             CreateWebHostBuilder(args).Run();
+             CreateWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHost CreateWebHostBuilder(string[] args) {
-            IWebHostBuilder builder = new WebHostBuilder()
-            .UseKestrel()
-            .UseContentRoot(Directory.GetCurrentDirectory());
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) {
 
-
-            builder.ConfigureAppConfiguration((hostingContext, config) =>
-            {
-                IHostingEnvironment env = hostingContext.HostingEnvironment;
-                config.AddJsonFile(
-                        "appsettings.json",
-                        optional: true,
-                        reloadOnChange: true
-                    ).AddJsonFile(
-                        $"appsettings.{env.EnvironmentName}.json",
-                        optional: true,
-                        reloadOnChange: true
-                    );
-                config.AddEnvironmentVariables();
-                if (args != null)
+            return WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostingContext, config) =>
                 {
+                    config.SetBasePath(Directory.GetCurrentDirectory());
+                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                    config.AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true);
                     config.AddCommandLine(args);
-                }
-            })
-            .ConfigureLogging((hostingContext, logging) =>
-            {
-                logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
-                logging.AddConsole();
-                logging.AddDebug();
-            })
-            .UseIISIntegration()
-            .UseDefaultServiceProvider(
-                    (context, options) => { options.ValidateScopes = context.HostingEnvironment.IsDevelopment(); });
-            
-
-            return builder.UseStartup<Startup>()
-                           .UseUrls("http://localhost:5020").Build();
+                    config.Build();
+                })
+                .UseStartup<Startup>()
+                .UseUrls("http://localhost:5000");
         }
+
+
+            //IWebHostBuilder builder = new WebHostBuilder()
+            //.UseKestrel()
+            //.UseContentRoot(Directory.GetCurrentDirectory());
+
+
+            //builder.ConfigureAppConfiguration((hostingContext, config) =>
+            //{
+            //    IHostingEnvironment env = hostingContext.HostingEnvironment;
+            //    config.AddJsonFile(
+            //            "appsettings.json",
+            //            optional: true,
+            //            reloadOnChange: true
+            //        ).AddJsonFile(
+            //            $"appsettings.{env.EnvironmentName}.json",
+            //            optional: true,
+            //            reloadOnChange: true
+            //        );
+            //    config.AddEnvironmentVariables();
+            //    if (args != null)
+            //    {
+            //        config.AddCommandLine(args);
+            //    }
+            //})
+            //.ConfigureLogging((hostingContext, logging) =>
+            //{
+            //    logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+            //    logging.AddConsole();
+            //    logging.AddDebug();
+            //})
+            //.UseIISIntegration()
+            //.UseDefaultServiceProvider(
+            //        (context, options) => { options.ValidateScopes = context.HostingEnvironment.IsDevelopment(); });
+
+
+            //return builder.UseStartup<Startup>()
+            //               .UseUrls("http://localhost:5020").Build();
+        
             
     }
 }
