@@ -19,8 +19,9 @@ namespace narilearsi.Data
         public async Task<String> GetPersons()
         {
             using (StoredProcedure stProcedure = new StoredProcedure(_configuration,"GetPersons", "dbo")) {
-                await stProcedure.executeAsync();
-                return stProcedure.ToJson();
+                var res = await stProcedure.executeAsync();
+                if (res.Tables[0].Rows.Count > 0) return stProcedure.ToJson();
+                else return "[]"; 
             }
         }
     }

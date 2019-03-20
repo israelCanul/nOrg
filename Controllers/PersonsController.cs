@@ -12,7 +12,7 @@ namespace narilearsi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class PersonsController : ControllerBase
     {
         private IConfiguration _configuration;

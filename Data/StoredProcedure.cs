@@ -256,7 +256,7 @@ namespace narilearsi.Data
                 if (!dr.HasRows)
                     return "";
 
-                if (_mdts.Tables[0].Rows.Count > 1)
+                if (_mdts.Tables[0].Rows.Count > 0)
                     ret.Append("[");
 
                 while (dr.Read())
@@ -284,7 +284,7 @@ namespace narilearsi.Data
                 }
 
 
-                if (_mdts.Tables[0].Rows.Count > 1)
+                if (_mdts.Tables[0].Rows.Count > 0)
                     ret.Append("]");
 
             }
