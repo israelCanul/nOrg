@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using narilearsi.Services;
 
 namespace narilearsi.Controllers
 {
@@ -13,13 +14,15 @@ namespace narilearsi.Controllers
     public class EventController : ControllerBase
     {
         private IConfiguration _configuration;
-        public EventController(IConfiguration configuration) {
+        private IEventRepository _eventRepository;
+        public EventController(IConfiguration configuration, IEventRepository eventRepository) {
             _configuration = configuration;
+            _eventRepository = eventRepository;
         }
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public  IActionResult Get()
         {
-            return Ok("eventos");
+            return Ok(_eventRepository.GetEvents());
         }
     }
 }

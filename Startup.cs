@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using narilearsi.Data;
+using narilearsi.EFModels;
 using narilearsi.Services;
 
 namespace narilearsi
@@ -29,9 +31,13 @@ namespace narilearsi
         {
 
             services.AddScoped<IPersonRepository, PersonRepository>();
+            services.AddScoped<IEventRepository, EventRepository>();
             services.AddMvcCore()
                     .AddAuthorization()
                     .AddJsonFormatters();
+            services.AddDbContext<narilearsiContext>(options => {
+                options.UseSqlServer("Server= rdsdev.cyizhh2mbeac.us-east-1.rds.amazonaws.com\\SQLEXPRESS,4389;Database=narilearsi;User ID=israelcanul;Password=12345678");
+            });
             services.AddAuthentication("Bearer")
                     .AddJwtBearer("Bearer", options =>
                     {
