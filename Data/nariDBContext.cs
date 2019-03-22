@@ -9,6 +9,8 @@ namespace narilearsi.Data
     {
         public NariDBContext(DbContextOptions<NariDBContext> options)
             : base(options)
-        { }
+        { 
+        
+        }
     }
 }

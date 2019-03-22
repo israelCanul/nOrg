@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using narilearsi.ModelDB;
 using narilearsi.Services;
+using System.Threading.Tasks;
 
 namespace narilearsi.Data
 {
@@ -22,8 +23,10 @@ namespace narilearsi.Data
 
         public IEnumerable<Event> GetEvents()
         {
-            var res = _context.Event.Include(c => c.EventType).ToList();
-            return res;
+            var res = _context.Event.Include(c => c.EventoEventTypeId).ToArray();
+
+
+            return  res;
         }
         public Event SetEvent()
         {
@@ -33,7 +36,7 @@ namespace narilearsi.Data
                 eventDescription = "ejemplo de nuevo",
                 eventDate = new DateTime(),
                 eventStatus = "Pending",
-                EventType = new EventType
+                EventoEventTypeId = new EventType
                 {
                     etName = "EJEMPLO",
                     etDescription = "Esta es su descripcion"
@@ -43,5 +46,10 @@ namespace narilearsi.Data
             _context.SaveChanges();
             return res;
         }
+
+        //public async Task<List<Event>> GetEvents()
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

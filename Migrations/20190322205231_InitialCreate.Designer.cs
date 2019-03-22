@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace narilearsi.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20190322184118_InitialCreate")]
+    [Migration("20190322205231_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,9 +22,11 @@ namespace narilearsi.Migrations
 
             modelBuilder.Entity("narilearsi.ModelDB.Event", b =>
                 {
-                    b.Property<int>("EventID")
+                    b.Property<int>("EventId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("EventoEventTypeIdEventTypeId");
 
                     b.Property<DateTime>("eventDate");
 
@@ -34,16 +36,16 @@ namespace narilearsi.Migrations
 
                     b.Property<string>("eventStatus");
 
-                    b.Property<int>("eventType");
+                    b.HasKey("EventId");
 
-                    b.HasKey("EventID");
+                    b.HasIndex("EventoEventTypeIdEventTypeId");
 
                     b.ToTable("Event");
                 });
 
             modelBuilder.Entity("narilearsi.ModelDB.EventType", b =>
                 {
-                    b.Property<int>("EventTypeID")
+                    b.Property<int>("EventTypeId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -51,7 +53,7 @@ namespace narilearsi.Migrations
 
                     b.Property<string>("etName");
 
-                    b.HasKey("EventTypeID");
+                    b.HasKey("EventTypeId");
 
                     b.ToTable("EventType");
                 });
@@ -73,6 +75,13 @@ namespace narilearsi.Migrations
                     b.HasKey("PersonID");
 
                     b.ToTable("Persons");
+                });
+
+            modelBuilder.Entity("narilearsi.ModelDB.Event", b =>
+                {
+                    b.HasOne("narilearsi.ModelDB.EventType", "EventoEventTypeId")
+                        .WithMany("Event")
+                        .HasForeignKey("EventoEventTypeIdEventTypeId");
                 });
 #pragma warning restore 612, 618
         }

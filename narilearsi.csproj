@@ -18,6 +18,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,5 +35,10 @@
     <Compile Remove="Migrations\20190322184118_InitialCreate.cs" />
     <Compile Remove="Migrations\20190322184118_InitialCreate.Designer.cs" />
     <Compile Remove="Migrations\DBContextModelSnapshot.cs" />
+    <Compile Remove="EFModels\Event.cs" />
+    <Compile Remove="EFModels\EventType.cs" />
+    <Compile Remove="Migrations\20190322193036_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190322202650_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190322204620_InitialCreate.cs" />
   </ItemGroup>
 </Project>
