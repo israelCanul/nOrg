@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace narilearsi.ModelDB
 {
     public class Persons
@@ -7,6 +9,7 @@ namespace narilearsi.ModelDB
         {
 
         }
+        [Key]
         public int PersonID { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }

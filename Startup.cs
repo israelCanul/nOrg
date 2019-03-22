@@ -32,10 +32,11 @@ namespace narilearsi
 
             services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<IEventTypeRepository, EventTypeRepository>();
             services.AddMvcCore()
                     .AddAuthorization()
                     .AddJsonFormatters();
-            services.AddDbContext<narilearsiContext>(options => {
+            services.AddDbContext<DBContext>(options => {
                 options.UseSqlServer("Server= rdsdev.cyizhh2mbeac.us-east-1.rds.amazonaws.com\\SQLEXPRESS,4389;Database=narilearsi;User ID=israelcanul;Password=12345678");
             });
             services.AddAuthentication("Bearer")

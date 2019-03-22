@@ -10,6 +10,7 @@
     <PackageReference Include="EntityFramework" Version="6.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.3">
@@ -22,5 +23,16 @@
   <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- <Compile Remove="Data\nariDBContext.cs" />
+    <Compile Remove="EFModels\Event.cs" /> -->
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="EFModels\Event.cs" />
+    <Compile Remove="EFModels\EventType.cs" />
+    <Compile Remove="Migrations\20190322184118_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190322184118_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\DBContextModelSnapshot.cs" />
   </ItemGroup>
 </Project>

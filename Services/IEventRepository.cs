@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using narilearsi.EFModels;
+using narilearsi.ModelDB;
 
 namespace narilearsi.Services
 {
@@ -8,5 +8,6 @@ namespace narilearsi.Services
     {
         IEnumerable<Event> GetEvents();
         Event GetEvent(int eventID);
+        Event SetEvent();
     }
 }

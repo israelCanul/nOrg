@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using narilearsi.EFModels;
+using narilearsi.ModelDB;
 using narilearsi.Services;
 
 namespace narilearsi.Data
 {
-    public class EventRepository:IEventRepository
+    public class EventRepository : IEventRepository
     {
-        private narilearsiContext _context;
-        public EventRepository(narilearsiContext context)
+        private DBContext _context;
+        public EventRepository(DBContext context)
         {
             _context = context;
         }
@@ -22,7 +22,25 @@ namespace narilearsi.Data
 
         public IEnumerable<Event> GetEvents()
         {
-            var res = _context.Event.ToList();
+            var res = _context.Event.Include(c => c.EventType).ToList();
+            return res;
+        }
+        public Event SetEvent()
+        {
+            var res = new Event
+            {
+                eventName = "nuevo",
+                eventDescription = "ejemplo de nuevo",
+                eventDate = new DateTime(),
+                eventStatus = "Pending",
+                EventType = new EventType
+                {
+                    etName = "EJEMPLO",
+                    etDescription = "Esta es su descripcion"
+                }
+            };
+            _context.Add(res);
+            _context.SaveChanges();
             return res;
         }
     }

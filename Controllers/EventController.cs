@@ -24,5 +24,10 @@ namespace narilearsi.Controllers
         {
             return Ok(_eventRepository.GetEvents());
         }
+        [HttpGet("crearEjemplo")]
+        public IActionResult CrearEventEjemplo()
+        {
+            return Ok(_eventRepository.SetEvent());
+        }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace narilearsi.EFModels
 {
@@ -12,6 +11,8 @@ namespace narilearsi.EFModels
         public DateTime? EventDate { get; set; }
         public string EventStatus { get; set; }
 
-        public virtual EventType EventTypeNavigation { get; set; }
+
+        public int EventTypeId { get; set; }
+        public EventType EventType_Navigation { get; set; }
     }
 }

@@ -8,5 +8,6 @@ public class DBContext : DbContext
         : base(options)
     { }
     public DbSet<Persons> Persons { get; set; }
-    public DbSet<EventType> EventTypes { get; set; }
+    public DbSet<EventType> EventType { get; set; }
+    public DbSet<Event> Event { get; set; }
 }
