@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using narilearsi.EFModels;
 using narilearsi.Services;
@@ -21,7 +22,8 @@ namespace narilearsi.Data
 
         public IEnumerable<Event> GetEvents()
         {
-            return _context.Event.OrderBy(c => c.EventName).ToList();
+            var res = _context.Event.ToList();
+            return res;
         }
     }
 }
