@@ -11,5 +11,7 @@ namespace narilearsi.EFModels
         public string EventDescription { get; set; }
         public DateTime? EventDate { get; set; }
         public string EventStatus { get; set; }
+
+        public virtual EventType EventTypeNavigation { get; set; }
     }
 }

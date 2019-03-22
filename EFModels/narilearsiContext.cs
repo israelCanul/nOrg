@@ -19,14 +19,14 @@ namespace narilearsi.EFModels
         public virtual DbSet<EventType> EventType { get; set; }
         public virtual DbSet<Persons> Persons { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
+//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//        {
 //            if (!optionsBuilder.IsConfigured)
 //            {
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-            //    optionsBuilder.UseSqlServer("Server= rdsdev.cyizhh2mbeac.us-east-1.rds.amazonaws.com\\SQLEXPRESS,4389;Database=narilearsi;User ID=israelcanul;Password=12345678");
-            //}
-        }
+//                optionsBuilder.UseSqlServer("Server= rdsdev.cyizhh2mbeac.us-east-1.rds.amazonaws.com\\\\\\\\SQLEXPRESS,4389;Database=narilearsi;User ID=israelcanul;Password=12345678");
+//            }
+//        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -60,6 +60,12 @@ namespace narilearsi.EFModels
                     .IsUnicode(false);
 
                 entity.Property(e => e.EventType).HasColumnName("eventType");
+
+                entity.HasOne(d => d.EventTypeNavigation)
+                    .WithMany(p => p.Event)
+                    .HasForeignKey(d => d.EventType)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Event_EventType");
             });
 
             modelBuilder.Entity<EventType>(entity =>
@@ -82,8 +88,7 @@ namespace narilearsi.EFModels
 
             modelBuilder.Entity<Persons>(entity =>
             {
-                entity.HasKey(e => e.PersonId)
-                    .HasName("PK__Persons__AA2FFB85ED3EFF5C");
+                entity.HasKey(e => e.PersonId);
 
                 entity.Property(e => e.PersonId)
                     .HasColumnName("PersonID")
