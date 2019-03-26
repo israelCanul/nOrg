@@ -3,14 +3,16 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace narilearsi.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20190326035029_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,8 +28,6 @@ namespace narilearsi.Migrations
 
                     b.Property<int?>("EventoEventTypeIdEventTypeId");
 
-                    b.Property<int?>("PersonsPersonID");
-
                     b.Property<DateTime>("eventDate");
 
                     b.Property<string>("eventDescription");
@@ -39,8 +39,6 @@ namespace narilearsi.Migrations
                     b.HasKey("EventId");
 
                     b.HasIndex("EventoEventTypeIdEventTypeId");
-
-                    b.HasIndex("PersonsPersonID");
 
                     b.ToTable("Event");
                 });
@@ -149,10 +147,6 @@ namespace narilearsi.Migrations
                     b.HasOne("narilearsi.ModelDB.EventType", "EventoEventTypeId")
                         .WithMany()
                         .HasForeignKey("EventoEventTypeIdEventTypeId");
-
-                    b.HasOne("narilearsi.ModelDB.Persons")
-                        .WithMany("Event")
-                        .HasForeignKey("PersonsPersonID");
                 });
 
             modelBuilder.Entity("narilearsi.ModelDB.Item", b =>

@@ -20,5 +20,6 @@ namespace narilearsi.ModelDB
         public string eventStatus { get; set; }       
 
         public EventType EventoEventTypeId { get; set; }
+        public ICollection<PhotoPackage> photoPackage { get; set; }
     }
 }
