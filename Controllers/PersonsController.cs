@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using narilearsi.ModelDB;
 using narilearsi.Services;
 
 namespace narilearsi.Controllers
@@ -13,7 +14,7 @@ namespace narilearsi.Controllers
     [Route("api/[controller]")]
     [ApiController]
     //[Authorize]
-    public class PersonsController : ControllerBase
+    public class PersonsController : Controller
     {
         private IConfiguration _configuration;
         private IPersonRepository _PersonRepository;
@@ -38,8 +39,14 @@ namespace narilearsi.Controllers
 
         // POST: api/Persons
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody]Persons person)
         {
+            if (!ModelState.IsValid) {
+                return BadRequest(ModelState);
+            }
+
+            var res = await _PersonRepository.SetPerson(person);
+            return Ok(res);
         }
 
         // PUT: api/Persons/5

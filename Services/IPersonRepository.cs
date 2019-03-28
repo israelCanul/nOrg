@@ -7,6 +7,9 @@ namespace narilearsi.Services
 {
     public interface IPersonRepository
     {
-        Task<String> GetPersons();
+        Task<List<Persons>> GetPersons();
+        Task<Persons> SetPerson(Persons person);
+        Task<string> UpdatePerson(Persons person);
+        Task<string> DeletePerson(int personId);
     }
 }

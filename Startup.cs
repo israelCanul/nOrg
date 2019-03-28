@@ -34,20 +34,20 @@ namespace narilearsi
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<IEventTypeRepository, EventTypeRepository>();
             services.AddMvcCore()
-                    .AddAuthorization()
+                    //.AddAuthorization()
                     .AddJsonFormatters();
             services.AddDbContext<DBContext>(options => {
                 options.UseSqlServer("Server= rdsdev.cyizhh2mbeac.us-east-1.rds.amazonaws.com\\SQLEXPRESS,4389;Database=narilearsi;User ID=israelcanul;Password=12345678");
             });
-            services.AddAuthentication("Bearer")
-                    .AddJwtBearer("Bearer", options =>
-                    {
-                        options.Authority = "http://localhost:5000";
-                        options.RequireHttpsMetadata = false;
-                        options.Audience = "narilearsi";
-                    });
+            //services.AddAuthentication("Bearer")
+            //        .AddJwtBearer("Bearer", options =>
+            //        {
+            //            options.Authority = "http://localhost:5000";
+            //            options.RequireHttpsMetadata = false;
+            //            options.Audience = "narilearsi";
+            //        });
 
-            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,7 +62,7 @@ namespace narilearsi
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseAuthentication();
+            //app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
         }

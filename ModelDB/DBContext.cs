@@ -16,7 +16,10 @@ public class DBContext : DbContext
     public DbSet<Persons> Persons { get; set; }
     public DbSet<EventType> EventType { get; set; }
     public DbSet<Event> Event { get; set; }
-
+    public DbSet<PhotoPackage> PhotoPackage { get; set; }
+    public DbSet<ItemPackage> ItemPackage { get; set; }
+    public DbSet<Item> Item { get; set; }
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         //modelBuilder.Entity<EventType>()
