@@ -37,7 +37,8 @@ namespace narilearsi
                     //.AddAuthorization()
                     .AddJsonFormatters();
             services.AddDbContext<DBContext>(options => {
-                options.UseSqlServer("Server= rdsdev.cyizhh2mbeac.us-east-1.rds.amazonaws.com\\SQLEXPRESS,4389;Database=narilearsi;User ID=israelcanul;Password=12345678");
+                //options.UseSqlServer("Server= rdsdev.cyizhh2mbeac.us-east-1.rds.amazonaws.com\\SQLEXPRESS,4389;Database=narilearsi;User ID=israelcanul;Password=12345678");
+                options.UseSqlServer("Server=DESKTOP-KA36I15\\SQLEXPRESS;Database=narilearsi;Trusted_Connection=True;");
             });
             //services.AddAuthentication("Bearer")
             //        .AddJwtBearer("Bearer", options =>

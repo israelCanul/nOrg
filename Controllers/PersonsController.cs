@@ -32,9 +32,16 @@ namespace narilearsi.Controllers
 
         // GET: api/Persons/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            var res = await _PersonRepository.GetPerson(id);
+            if (res == null) {
+                return BadRequest("{\"code\":-1,\"desc\":\"no se encuentra el objeto\"}");
+            }
+            if (res.status != "ACTIVE") {
+                return BadRequest("{\"code\":-1,\"desc\":\"This Person is not Active\"}");
+            }
+            return Ok(res);
         }
 
         // POST: api/Persons
@@ -44,15 +51,19 @@ namespace narilearsi.Controllers
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
-
             var res = await _PersonRepository.SetPerson(person);
             return Ok(res);
         }
 
         // PUT: api/Persons/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPost("{id}")]
+        public async Task<IActionResult> UpdatePerson(int id, [FromBody]Persons person)
         {
+            if (!ModelState.IsValid) {
+                return BadRequest("{\"code\":-1,\"desc\":\"no se encuentra el objeto\"}");
+            }
+            var res = _PersonRepository.UpdatePerson(id, person);
+            return Ok(res);
         }
 
         // DELETE: api/ApiWithActions/5

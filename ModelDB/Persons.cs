@@ -21,6 +21,7 @@ namespace narilearsi.ModelDB
         [Required]
         [EmailAddress]
         public string Email { get; set; }
+        public string status { get; set; }
 
         public ICollection<Event> Event { get; set; }
     }
