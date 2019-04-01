@@ -24,8 +24,7 @@ namespace narilearsi.Data
         public IEnumerable<Event> GetEvents()
         {
             var res = _context.Event.Include(c => c.EventoEventTypeId).ToArray();
-
-
+            
             return  res;
         }
         public Event SetEvent()

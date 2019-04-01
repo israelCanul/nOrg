@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ModelNari;
 using narilearsi.ModelDB;
@@ -68,7 +69,7 @@ namespace narilearsi.Data
         /*** GET -*/
         async Task<List<Persons>> IPersonRepository.GetPersons()
         {
-            return _context.Persons.Where(c => c.status != "INACTIVE").ToList();
+            return _context.Persons.Include(c => c.Event).Where(c => c.status != "INACTIVE").ToList();
         }
         public async Task<Persons> GetPerson(int personId)
         {

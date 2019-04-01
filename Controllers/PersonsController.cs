@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using ModelNari;
 using narilearsi.ModelDB;
 using narilearsi.Services;
 
@@ -27,7 +29,9 @@ namespace narilearsi.Controllers
         public async Task<IActionResult> Get()
         {
             var res = await _PersonRepository.GetPersons();
-            return Ok(res);
+
+            var resultado = Mapper.Map<List<PersonWithEventOnly>>(res);
+            return Ok(resultado);
         }
 
         // GET: api/Persons/5
