@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentityModel.Client;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using narilearsi.Services;
@@ -21,11 +22,16 @@ namespace narilearsi.Controllers
         }
 
         // GET api/values
-        [HttpGet("config")]
+        [HttpGet("getToken")]
         public async Task<IActionResult> configGetAsync()
         {
-            var res = await _PersonRepository.GetPersons();
-            return Ok(res);
+            var disco = await DiscoveryClient.GetAsync("http://localhost:5000");
+            var tokenClient = new TokenClient(disco.TokenEndpoint, "client", "secret");
+            var tokenResponse = await tokenClient.RequestClientCredentialsAsync("narilearsi");
+            if (tokenResponse.IsError) {
+                return BadRequest("Error getting token");
+            }
+            return Ok(tokenResponse.Json);
         }
 
         // GET api/values/5

@@ -34,13 +34,13 @@ namespace narilearsi
                 //options.UseSqlServer("Server= rdsdev.cyizhh2mbeac.us-east-1.rds.amazonaws.com\\SQLEXPRESS,4389;Database=narilearsi;User ID=israelcanul;Password=12345678");
                 options.UseSqlServer("Server=DESKTOP-KA36I15\\SQLEXPRESS;Database=narilearsi;Trusted_Connection=True;");
             });
-            //services.AddAuthentication("Bearer")
-            //        .AddJwtBearer("Bearer", options =>
-            //        {
-            //            options.Authority = "http://localhost:5000";
-            //            options.RequireHttpsMetadata = false;
-            //            options.Audience = "narilearsi";
-            //        });
+            services.AddAuthentication("Bearer")
+                 .AddJwtBearer("Bearer", options =>
+                    {
+                        options.Authority = "http://localhost:5000";
+                        options.RequireHttpsMetadata = false;
+                        options.Audience = "narilearsi";
+                    });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -57,7 +57,7 @@ namespace narilearsi
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            //app.UseAuthentication();
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             AutoMapper.Mapper.Initialize(config =>
             {
